@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>go语言的rpc | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="服务端： 注册 rpc 服务对象。给对象绑定方法（ 1. 定义类， 2. 绑定类方法 ） 1rpc.RegisterName(&quot;服务名&quot;，回调对象)  创建监听器  1listener, err :&#x3D; net.Listen()  建立连接 1conn, err :&#x3D; listener.Accept()  将连接 绑定 rpc 服务。 1rpc.ServeConn(conn)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go语言的rpc">
+<meta property="og:url" content="http://example.com/2021/03/27/go%E8%AF%AD%E8%A8%80%E7%9A%84rpc/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="服务端： 注册 rpc 服务对象。给对象绑定方法（ 1. 定义类， 2. 绑定类方法 ） 1rpc.RegisterName(&quot;服务名&quot;，回调对象)  创建监听器  1listener, err :&#x3D; net.Listen()  建立连接 1conn, err :&#x3D; listener.Accept()  将连接 绑定 rpc 服务。 1rpc.ServeConn(conn)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-27T11:37:53.000Z">
+<meta property="article:modified_time" content="2021-03-27T11:38:15.007Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-go语言的rpc" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/03/27/go%E8%AF%AD%E8%A8%80%E7%9A%84rpc/" class="article-date">
+  <time class="dt-published" datetime="2021-03-27T11:37:53.000Z" itemprop="datePublished">2021-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      go语言的rpc
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="服务端："><a href="#服务端：" class="headerlink" title="服务端："></a>服务端：</h2><ol>
+<li><p>注册 rpc 服务对象。给对象绑定方法（ 1. 定义类， 2. 绑定类方法 ）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpc.RegisterName(<span class="string">&quot;服务名&quot;</span>，回调对象)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建监听器 </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listener, err := net.Listen()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立连接</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conn, err := listener.Accept()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将连接 绑定 rpc 服务。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpc.ServeConn(conn)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h2 id="客户端："><a href="#客户端：" class="headerlink" title="客户端："></a>客户端：</h2><ol>
+<li><p>用 rpc 连接服务器。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conn, err := rpc.Dial()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用远程函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conn.Call(<span class="string">&quot;服务名.方法名&quot;</span>, 传入参数, 传出参数)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><ol>
+<li><p>服务端</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;net&quot;</span></span><br><span class="line">	<span class="string">&quot;net/rpc&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义类对象</span></span><br><span class="line"><span class="keyword">type</span> World <span class="keyword">struct</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 绑定类方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(this *World)</span> <span class="title">HelloWorld</span><span class="params">(name <span class="keyword">string</span>, resp *<span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	*resp = name + <span class="string">&quot; 你好!&quot;</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 1. 注册RPC服务, 绑定对象方法</span></span><br><span class="line">	err := rpc.RegisterName(<span class="string">&quot;hello&quot;</span>, <span class="built_in">new</span>(World))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;注册 rpc 服务失败!&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 2. 设置监听</span></span><br><span class="line">	listener, err := net.Listen(<span class="string">&quot;tcp&quot;</span>, <span class="string">&quot;127.0.0.1:8800&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;net.Listen err:&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> listener.Close()</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;开始监听 ...&quot;</span>)</span><br><span class="line">	<span class="comment">// 3. 建立链接</span></span><br><span class="line">	conn, err := listener.Accept()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;Accept() err:&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line">	fmt.Println(<span class="string">&quot;链接成功...&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 4. 绑定服务</span></span><br><span class="line">	rpc.ServeConn(conn)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;net/rpc&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 1. 用 rpc 链接服务器 --Dial()</span></span><br><span class="line">	conn, err := rpc.Dial(<span class="string">&quot;tcp&quot;</span>, <span class="string">&quot;127.0.0.1:8800&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;Dial err:&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> conn.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 2. 调用远程函数</span></span><br><span class="line">	<span class="keyword">var</span> reply <span class="keyword">string</span> <span class="comment">// 接受返回值 --- 传出参数</span></span><br><span class="line"></span><br><span class="line">	err = conn.Call(<span class="string">&quot;hello.HelloWorld&quot;</span>, <span class="string">&quot;李白&quot;</span>, &amp;reply)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">&quot;Call:&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(reply)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/03/27/go%E8%AF%AD%E8%A8%80%E7%9A%84rpc/" data-id="ckmrntvc10003f8vthlf77soo" data-title="go语言的rpc" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/03/27/gRpc-Consul/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">gRpc+Consul</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/27/go%E8%AF%AD%E8%A8%80%E7%9A%84rpc/">go语言的rpc</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/gRpc-Consul/">gRpc+Consul</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/proto-go/">proto_go</a>
+          </li>
+        
+          <li>
+            <a href="/2021/03/27/vscode%E6%96%AD%E7%82%B9%E8%B0%83%E8%AF%95go/">vscode断点调试go</a>
+          </li>
+        
+          <li>
+            <a href="/2021/02/22/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
